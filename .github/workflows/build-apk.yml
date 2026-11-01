@@ -1,0 +1,24 @@
+name: group5_course_reg
+description: Group 5 Course Registration App (MCS5205)
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.2.0   # saves data on the phone
+  crypto: ^3.0.3               # hashes passwords (never store them as plain text)
+  pdf: ^3.11.0                 # builds the course form PDF
+  printing: ^5.13.0            # print dialog / save as PDF
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
