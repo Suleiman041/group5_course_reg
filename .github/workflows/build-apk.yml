@@ -1,24 +1,31 @@
-name: group5_course_reg
-description: Group 5 Course Registration App (MCS5205)
-publish_to: 'none'
-version: 1.0.0+1
+name: Build APK
 
-environment:
-  sdk: '>=3.0.0 <4.0.0'
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
 
-dependencies:
-  flutter:
-    sdk: flutter
-  shared_preferences: ^2.2.0   # saves data on the phone
-  crypto: ^3.0.3               # hashes passwords (never store them as plain text)
-  pdf: ^3.11.0                 # builds the course form PDF
-  printing: ^5.13.0            # print dialog / save as PDF
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-flutter:
-  uses-material-design: true
-  assets:
-    - assets/
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BUK-Course-Reg-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
